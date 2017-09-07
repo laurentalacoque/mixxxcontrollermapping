@@ -1,63 +1,60 @@
-# MIXXX Controller mapping for Hercules DJ Controller Instinct (S)
+## MIXXX Controller mapping for Hercules DJ Controller Instinct (S)
+*based on the work of mich@softwareschneiderei.ch*  
+*continued by Stephan Martin*  
+*continued by freaktechnik*  
+*continued by BangL*  
+  
+http://www.mixxx.org/forums/viewtopic.php?f=7&t=3907  
+http://mixxx.org/  
+  
+  
+### Mapping descriptions
 
-based on the work of mich@softwareschneiderei.ch
-continued by Stephan Martin
-continued by freaktechnik
-continued by BangL
 
-http://www.mixxx.org/forums/viewtopic.php?f=7&t=3907
+#### Hot cues
 
-http://mixxx.org/
+(click MODE -> off = Cue Mode)  
+1,2 : Select/Store Hotcue 1,2  
+3,4 : Delete Hotcue 1,2  
 
+#### Loops
 
-Description of Mappings
-===============
+1,2 loop in / out  
+3: halve looping time  
+4: looping off  
 
-Hot Cue
-=======
-(click MODE -> off = Cue Mode)
-1,2 : Select/Store Hotcue 1,2
-3,4 : Delete Hotcue 1,2
+#### Headpones +/- buttons:
 
-Loop
-=====
-1,2 loop in / out
-3: halve looping time
-4: looping off
+Buttons are not mapped. The Controller takes care of adjusting the volume  
+of the controllers headphone plug. Mixxx also adjustes the volume independend  
+of the controller.  
 
-Headpone Plus/Minus Buttons:
-==================
-Buttons are not mapped. The Controller takes care of adjusting the volume 
-of the controllers headphone plug. Mixxx also adjustes the volume independend 
-of the controller.
+#### Tempo / Pitch bend
 
-Pitch
-====
-To have a more precide way to work, Pitching makes fine tuning, Plus/Minus Buttons are temporary 
-pitchings. 
-Pressing Plus- and Minus-Buttons together resets the Pitch to Zero.
-(Feel free to change  :)
+To have a more precide way to work, Pitching makes fine tuning, Plus/Minus Buttons are temporary  
+pitchings.  
+Pressing Plus- and Minus-Buttons together resets the Pitch to Zero.  
+(Feel free to change  :)  
 
 
 
-Todo:
-=====
+### Todo:
 
-7) Headphone +- Switches -> Headphone-Volume
-8) Effects
-9) Better Looping Mappings
-10) Simulate Gain with Vinyl + Pitch
-11) Simulate Mastervolume with Headphone-+ & Vinyl
-12) Image for Documentation of Mappings / Wiki
+* Headphone +- Switches -> Headphone-Volume
+* Effects
+* Better Looping Mappings
+* Simulate Gain with Vinyl + Pitch
+* Simulate Mastervolume with Headphone-+ & Vinyl
+* Image for Documentation of Mappings / Wiki
 
-Done:
-=====
-1) Automapping
-2) Jog Wheels
-3) Pitch +/- & PitchSwitch
-4) Pitch - and + simultaneously = Reset Pitch to Zero
-5) Hotcue Deletions
+### Done:
+
+* Automapping
+* Jog Wheels
+* Pitch +/- & PitchSwitch
+* Pitch - and + simultaneously = Reset Pitch to Zero
+* Hotcue Deletions
     1,2,3,4 : Select/Store Hotcue 1,2,3,4
     Vinyl + 1,2,3,4 : Delete Hotcue
-6) LED's     
-13) Playlist Navigation
+* LED's     
+* Playlist Navigation
