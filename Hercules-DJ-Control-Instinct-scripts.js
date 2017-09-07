@@ -1,6 +1,6 @@
 // http://ts.hercules.com/download/sound/manuals/DJ_Instinct/QSG/DJCInstinct_Technical_specifications.pdf
 
-function HCI() {};
+var HCI = {};
 
 // ----------   Global variables    ----------
 HCI.pitchSpeedFast = true; 	// temporary Pitch Speed of +/-  true =
@@ -18,11 +18,11 @@ HCI.timerPlaylist= false;
 
 // called when the MIDI device is opened & set up
 HCI.init = function(id, debugging) {
-	HCI.id = id;
-	HCI.FastPosition=[0, 0];
-	HCI.jogFastPosition=[0, 0];
+	this.id = id;
+	this.FastPosition=[0, 0];
+	this.jogFastPosition=[0, 0];
 
-	HCI.allLedOff();
+	this.allLedOff();
 	midi.sendShortMsg(0x80, 0x39, 0x00);	// LED Folder
 	midi.sendShortMsg(0x90, 0x38, 0x7F);	// LED File
 
@@ -31,7 +31,7 @@ HCI.init = function(id, debugging) {
 
 // Called when the MIDI device is closed
 HCI.shutdown = function() {
-	HCI.allLedOff();
+	this.allLedOff();
 	print ("***** Hercules DJ Instinct Control id: \"" + this.id + "\" shutdown.");
 };
 
@@ -44,10 +44,10 @@ HCI.allLedOff = function () {
 // Use VinylButton as "Shift"-Button
 HCI.vinylButtonHandler = function(channel,control, value, status) {
 	if (value == ButtonState.pressed) {
-		HCI.vinylButton = true;
+		this.vinylButton = true;
 		midi.sendShortMsg(0x90, 0x35, 0x7F);	// LED Scratchmode
 	} else {
-		HCI.vinylButton = false;
+		this.vinylButton = false;
 		midi.sendShortMsg(0x80, 0x35, 0x00);	// LED Scratchmode
 	}
 };
@@ -109,28 +109,28 @@ HCI.knobIncrement = function (group, action, minValue, maxValue, centralValue, s
 
 // Pitch +/-
 HCI.pitch = function (midino, control, value, status, group) {
-	var speed = (HCI.vinylButton == true) ? "" : "_small";
+	var speed = (this.vinylButton == true) ? "" : "_small";
 	var state = (value == 0x7F) ? 1 : 0;
 	switch (control) {
-		case 0x11: HCI.pitchSwitches["A"][0] = state;
+		case 0x11: this.pitchSwitches["A"][0] = state;
 			engine.setValue(group, "rate_temp_down" + speed, state);
 			break;
-		case 0x12: HCI.pitchSwitches["A"][1] = state;
+		case 0x12: this.pitchSwitches["A"][1] = state;
 			engine.setValue(group, "rate_temp_up" + speed, state);
 			break;
-		case 0x2B: HCI.pitchSwitches["B"][0] = state;
+		case 0x2B: this.pitchSwitches["B"][0] = state;
 			engine.setValue(group, "rate_temp_down" + speed, state);
 			break;
-		case 0x2C: HCI.pitchSwitches["B"][1] = state;
+		case 0x2C: this.pitchSwitches["B"][1] = state;
 			engine.setValue(group, "rate_temp_up" + speed, state);
 			break;
 	};
 	// when buttons + and - pressed simultanously
-	if (HCI.pitchSwitches["A"][0] && HCI.pitchSwitches["A"][1]) {
+	if (this.pitchSwitches["A"][0] && this.pitchSwitches["A"][1]) {
 		// reset pitch to 0
 		engine.setValue(group, "rate", 0);
 	};
-	if (HCI.pitchSwitches["B"][0] && HCI.pitchSwitches["B"][1]) {
+	if (this.pitchSwitches["B"][0] && this.pitchSwitches["B"][1]) {
 		engine.setValue(group, "rate", 0);
 	}
 };
@@ -138,7 +138,7 @@ HCI.pitch = function (midino, control, value, status, group) {
 // Up/Down-Switches
 HCI.tempPitch = function (midino, control, value, status, group) {
 	var rate = (value == 0x7F) ? "rate_perm_down" : "rate_perm_up" ;
-	if (HCI.vinylButton == false) {
+	if (this.vinylButton == false) {
 		rate = rate + "_small";
 	}
 	engine.setValue(group, rate, 1);
@@ -148,11 +148,11 @@ HCI.tempPitch = function (midino, control, value, status, group) {
 HCI.PlaylistModeFolder = function (channel, control, value, status, group) {
 	print("HCI.PlaylistModeFolder " + channel + "," + control + "," + value + "," + status + "," + group + "#");
 	if (value == 0x7F) { //Button pressed
-		if (HCI.PlaylistMode == "Folder") {
+		if (this.PlaylistMode == "Folder") {
 			// Doesn't work
 			//engine.setValue(group,"ToggleSelectedSidebarItem",engine.getValue(group,"ToggleSelectedSidebarItem"));
 		} else {
-			HCI.PlaylistMode = "Folder";
+			this.PlaylistMode = "Folder";
 		}
 		midi.sendShortMsg(0x90, 0x39, 0x7F);	// LED Folder
 		midi.sendShortMsg(0x80, 0x38, 0x00);	// LED File
@@ -162,10 +162,10 @@ HCI.PlaylistModeFolder = function (channel, control, value, status, group) {
 HCI.PlaylistModeFile  = function (channel, control, value, status, group) {
 	print("HCI.PlaylistModeFile " + channel + "," + control + "," + value + "," + status + "," + group + "#");
 	if (value == 0x7F) { //Button pressed
-		if (HCI.PlaylistMode == "File") {
+		if (this.PlaylistMode == "File") {
 			engine.setValue(group, "LoadSelectedIntoFirstStopped", true);
 		} else {
-			HCI.PlaylistMode = "File";
+			this.PlaylistMode = "File";
 		}
 		midi.sendShortMsg(0x80, 0x39, 0x00);	// LED Folder
 		midi.sendShortMsg(0x90, 0x38, 0x7F);	// LED File
@@ -175,44 +175,44 @@ HCI.PlaylistModeFile  = function (channel, control, value, status, group) {
 HCI.PlaylistPrev = function (channel, control, value, status, group) {
 	print("HCI.PlaylistPrev " + channel + "," + control + "," + value + "," + status + "," + group + "#");
 	if (value == 0x7F) { //Button pressed
-		if (HCI.PlaylistMode == "File") {
-			if (!HCI.timerPlaylist) {
-				HCI.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistPrev(' + channel + ',' + control + ',' + value + ',' + status + ',"' + group + '")',false);
+		if (this.PlaylistMode == "File") {
+			if (!this.timerPlaylist) {
+				this.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistPrev(' + channel + ',' + control + ',' + value + ',' + status + ',"' + group + '")',false);
 			}
 			engine.setValue(group, "SelectPrevTrack", true);
 		} else {
-			if (HCI.PlaylistMode == "Folder") {
+			if (this.PlaylistMode == "Folder") {
 				engine.setValue(group, "SelectPrevPlaylist", true);
 			} else {
-				print("Unknown PlaylistMode: " + HCI.PlaylistMode);
+				print("Unknown PlaylistMode: " + this.PlaylistMode);
 			}
 		}
 	} else { // Buttonrelese
-		if (HCI.timerPlaylist) {
-			engine.stopTimer(HCI.timerPlaylist);
-			HCI.timerPlaylist = false;
+		if (this.timerPlaylist) {
+			engine.stopTimer(this.timerPlaylist);
+			this.timerPlaylist = false;
 		}
 	}
 };
 
 HCI.PlaylistNext = function (channel, control, value, status, group) {
 	if (value == 0x7F) { //Button pressed
-		if (HCI.PlaylistMode == "File") {
-			if (!HCI.timerPlaylist) {
-				HCI.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistNext(' + channel + ',' + control + ',' + value + ',' + status + ',"' + group + '")', false);
+		if (this.PlaylistMode == "File") {
+			if (!this.timerPlaylist) {
+				this.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistNext(' + channel + ',' + control + ',' + value + ',' + status + ',"' + group + '")', false);
 			}
 			engine.setValue(group, "SelectNextTrack", true);
 		} else {
-			if (HCI.PlaylistMode == "Folder") {
+			if (this.PlaylistMode == "Folder") {
 				engine.setValue(group, "SelectNextPlaylist", true);
 			} else {
-				print ("Unknown PlaylistMode: " + HCI.PlaylistMode);
+				print ("Unknown PlaylistMode: " + this.PlaylistMode);
 			}
 		}
 	} else { // Button relese
-		if (HCI.timerPlaylist) {
-			engine.stopTimer(HCI.timerPlaylist);
-			HCI.timerPlaylist = false;
+		if (this.timerPlaylist) {
+			engine.stopTimer(this.timerPlaylist);
+			this.timerPlaylist = false;
 		}
 	}
 };
@@ -229,7 +229,7 @@ HCI.hotCue = function (midino, control, value, status, group) {
 	}
 
 	var action = "hotcue_" + number + "_";
-	if (HCI.vinylButton == false) {
+	if (this.vinylButton == false) {
 		action += "activate";
 	} else {
 		action += "clear";
