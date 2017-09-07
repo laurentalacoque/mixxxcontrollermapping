@@ -3,7 +3,6 @@
 function HCI() {};
 
 // ----------   Global variables    ----------
-HCI.scratching = [false, false];
 HCI.pitchSpeedFast = true; 	// temporary Pitch Speed of +/-  true =
 HCI.vinylButton = false;
 HCI.pitchSwitches = new Array();
@@ -54,65 +53,33 @@ HCI.vinylButtonHandler = function(channel,control, value, status) {
 };
 
 // The button that enables/disables scratching
-HCI.wheelTouch0 = function (channel, control, value, status) {
-	if (value == 0x7F && !HCI.scratching[0]) { // catch only first touch
+HCI.wheelTouch = function (channel, control, value, status) {
+	if (value == ButtonState.pressed) {
+		// enable scratching
 		var alpha = 1.0 / 8;
 		var beta = alpha / 32;
-		engine.scratchEnable(1, 128, 33 + 1 / 3, alpha, beta);
-		// Keep track of whether we're scratching on this virtual deck
-		HCI.scratching[0] = true;
+		engine.scratchEnable(group.toInt(), 128, 33 + 1 / 3, alpha, beta);
 	} else {
-		// button up
-		engine.scratchDisable(1);
-		HCI.scratching[0] = false;
+		// disable scratching
+		engine.scratchDisable(group.toInt());
 	}
 };
-
-// The button that enables/disables scratching
-HCI.wheelTouch1 = function (channel, control, value, status) {
-	if (value == 0x7F && !HCI.scratching[1]) { // catch only first touch
-		var alpha = 1.0 / 8;
-		var beta = alpha / 32;
-		engine.scratchEnable(2, 128, 33 + 1 / 3, alpha, beta);
-		// Keep track of whether we're scratching on this virtual deck
-		HCI.scratching[1] = true;
+HCI.wheelTurn = function (channel, control, value, status, group) {
+	// normalize value
+	var newValue;
+	if (value - 64 > 0) {
+		newValue = value - 128;
 	} else {
-		//  button up
-		engine.scratchDisable(2);
-		HCI.scratching[1] = false;
+		newValue = value;
 	}
-};
-
-HCI.wheelTurn0 = function (channel, control, value, status, group) {
-	if (engine.getValue(group, "duration") == 0){
-		if (value == 1) {
-			engine.setValue("[Playlist]","SelectNextTrack",true);
-		} else {
- 			engine.setValue("[Playlist]","SelectPrevTrack",true);
-		}
+	// check if scratching
+	if (engine.isScratching(group.toInt())) {
+		// scratch
+		engine.scratchTick(group.toInt(), newValue);
+	} else {
+		// pitch bend
+		engine.setValue(group, "jog", newValue);
 	}
-	// See if we're on scratching.
-	if (HCI.scratching[0] == false ) return;
-	var newValue;
-	if (value - 64 > 0) newValue = value - 128; // 7F, 7E, 7D
-	else newValue = value;
-	engine.scratchTick(1, newValue);
-};
-
-HCI.wheelTurn1 = function (channel, control, value, status, group) {
-	if (engine.getValue(group, "duration") == 0){
-		if (value == 1) {
-			engine.setValue("[Playlist]", "SelectNextTrack", true);
-		} else {
-			engine.setValue("[Playlist]", "SelectPrevTrack", true);
-		}
-	}
-	// See if we're on scratching.
-	if (HCI.scratching[1] == false ) return;
-	var newValue;
-	if (value - 64 > 0) newValue = value - 128; // 7F, 7E, 7D
-	else newValue = value;
-	engine.scratchTick(2, newValue);
 };
 
 HCI.knobIncrement = function (group, action, minValue, maxValue, centralValue, step, sign) {

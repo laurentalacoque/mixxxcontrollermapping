@@ -289,7 +289,7 @@
             </control>
             <control>
                 <group>[Channel2]</group>
-                <key>HCI.wheelTurn1</key>
+                <key>HCI.wheelTurn</key>
                 <description>Right JogWheel pressed and turning</description>
                 <status>0xB0</status>
                 <midino>0x33</midino>
@@ -299,7 +299,7 @@
             </control>
             <control>
                 <group>[Channel1]</group>
-                <key>HCI.wheelTouch0</key>
+                <key>HCI.wheelTouch</key>
                 <description>Left JogWheel switch </description>
                 <status>0x90</status>
                 <midino>0x1A</midino>
@@ -408,7 +408,7 @@
             </control>
             <control>
                 <group>[Channel1]</group>
-                <key>HCI.wheelTurn0</key>
+                <key>HCI.wheelTurn</key>
                 <description>Left Jog Wheel pressed and turning</description>
                 <status>0xB0</status>
                 <midino>0x32</midino>
@@ -517,7 +517,7 @@
             </control>
             <control>
                 <group>[Channel2]</group>
-                <key>HCI.wheelTouch1</key>
+                <key>HCI.wheelTouch</key>
                 <description>Right JogWheel switch </description>
                 <status>0x90</status>
                 <midino>0x34</midino>
@@ -621,6 +621,26 @@
                 <key>HCI.hotCue</key>
                 <status>0x90</status>
                 <midino>0x28</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>HCI.wheelTurn</key>
+                <description>Left Jog Wheel turning</description>
+                <status>0xB0</status>
+                <midino>0x30</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>HCI.wheelTurn</key>
+                <description>Right JogWheel turning</description>
+                <status>0xB0</status>
+                <midino>0x31</midino>
                 <options>
                     <script-binding/>
                 </options>
