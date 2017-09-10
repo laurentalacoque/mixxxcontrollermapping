@@ -210,6 +210,10 @@ HCI.permPitch = function(midiNo, control, value, status, group) {
 // === HEADPHONE / MASTER GAIN ===
 
 HCI.gain = function(midiNo, control, value, status, group) {
+/*
+	FIXME:
+	The Controller takes care of adjusting the volume of the controllers headphone plug hardware side.
+	Find a way to control master gain without messing with headphone volume.
 
 	// don't do anything when button is released
 	if (value != ButtonState.pressed) return;
@@ -223,7 +227,7 @@ HCI.gain = function(midiNo, control, value, status, group) {
 
 	// set new value
 	engine.setValue(group, gainType, current + 0.005 * direction);
-
+*/
 };
 
 // === FILE BROWSER ===

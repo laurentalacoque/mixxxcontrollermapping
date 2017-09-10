@@ -19,42 +19,33 @@ http://mixxx.org/
 
 #### Loops
 
-1,2 loop in / out  
-3: halve looping time  
-4: looping off  
+1,2 Loop in / out  
+3: Halve looping time  
+4: Looping off  
 
 #### Headpones +/- buttons:
 
-Buttons are not mapped. The Controller takes care of adjusting the volume  
-of the controllers headphone plug. Mixxx also adjustes the volume independend  
+Buttons are not implemented software side. The Controller takes care of adjusting the volume  
+of the controllers headphone plug. Mixxx adjustes the gain independendly  
 of the controller.  
 
-#### Tempo / Pitch bend
+#### Tempo / Pitch
 
-To have a more precide way to work, Pitching makes fine tuning, Plus/Minus Buttons are temporary  
-pitchings.  
+The Pitch levers change tempo permanently,
+The +/- buttons change it temporary (useful for correcting phase while beatmatching)  
 Pressing Plus- and Minus-Buttons together resets the Pitch to Zero.  
-(Feel free to change  :)  
+
+#### JogWheels
+
+Touch gently on the side to perform pitch bend fine tuning,
+or press them down to do pausing / scratching.
 
 
+### Planned / Todo:
 
-### Todo:
-
-* Headphone +- Switches -> Headphone-Volume
-* Effects
-* Better Looping Mappings
-* Simulate Gain with Vinyl + Pitch
-* Simulate Mastervolume with Headphone-+ & Vinyl
-* Image for Documentation of Mappings / Wiki
-
-### Done:
-
-* Automapping
-* Jog Wheels
-* Pitch +/- & PitchSwitch
-* Pitch - and + simultaneously = Reset Pitch to Zero
-* Hotcue Deletions
-    1,2,3,4 : Select/Store Hotcue 1,2,3,4
-    Vinyl + 1,2,3,4 : Delete Hotcue
-* LED's     
-* Playlist Navigation
+* Folder browsing is not fully implemented yet. Folders can't be opened/closed yet.
+* Add a small delay to the feature that browses files up/down further while holding down the button.
+* Shifted headphone +- switches should control master gain, but without changing headphone volume hardware side. Not sure if surpressing the hardware side handling is actually possible though.
+* The functionality of Effect and Sample Buttons are neither tested nor documented yet.
+* Find more useful uses for the shift (vinyl) button and implement them.
+* Bind "Filter" to shifted JogWheels.
