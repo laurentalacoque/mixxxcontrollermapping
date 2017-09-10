@@ -13,8 +13,8 @@ http://mixxx.org/
 
 #### Hot cues
 
-Select/store a hotcue 1-4 by pressing one of the 4 buttons,  
-of delete a hotcue by holding down shift (Vinyl) while doing so.  
+Select/store a hotcue by pressing one of the 4 buttons,  
+or delete a hotcue by holding down shift (Vinyl) while doing so.  
 
 #### Loops
 
@@ -31,14 +31,14 @@ Mixxx adjustes the gain independendly of the controller.
 
 #### Tempo / Pitch
 
-The Pitch levers change tempo permanently,
+The Pitch levers change tempo permanently,  
 The +/- buttons change it temporary (useful for correcting phase while beatmatching)  
-Pressing Plus- and Minus-Buttons together resets the Pitch to Zero.  
+Pressing +/- buttons together resets the pitch.  
 
 #### JogWheels
 
 Touch gently on the side to perform pitch bend fine tuning,  
-or press them down to do pausing / scratching.
+or press them down to do pausing / scratching.  
 
 
 ### Planned / Todo:
