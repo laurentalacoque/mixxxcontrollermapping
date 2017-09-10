@@ -13,13 +13,13 @@ http://mixxx.org/
 
 #### Hot cues
 
-(click MODE -> off = Cue Mode)  
-1,2 : Select/Store Hotcue 1,2  
-3,4 : Delete Hotcue 1,2  
+Select/store a hotcue 1-4 by pressing one of the 4 buttons,
+of delete a hotcue by holding down shift (Vinyl) while doing so.
 
 #### Loops
 
-1,2 Loop in / out  
+1: Loop in
+1: Loop out  
 3: Halve looping time  
 4: Looping off  
 
