@@ -3,31 +3,31 @@
 *continued by Stephan Martin*  
 *continued by freaktechnik*  
 *continued by BangL*  
-  
+
 http://www.mixxx.org/forums/viewtopic.php?f=7&t=3907  
 http://mixxx.org/  
-  
-  
+
+
 ### Mapping descriptions
 
 
 #### Hot cues
 
-Select/store a hotcue 1-4 by pressing one of the 4 buttons,
-of delete a hotcue by holding down shift (Vinyl) while doing so.
+Select/store a hotcue 1-4 by pressing one of the 4 buttons,  
+of delete a hotcue by holding down shift (Vinyl) while doing so.  
 
 #### Loops
 
-1: Loop in
-1: Loop out  
+1: Loop in  
+2: Loop out  
 3: Halve looping time  
 4: Looping off  
 
 #### Headpones +/- buttons:
 
-Buttons are not implemented software side. The Controller takes care of adjusting the volume  
-of the controllers headphone plug. Mixxx adjustes the gain independendly  
-of the controller.  
+Buttons are not implemented software side.  
+The Controller takes care of adjusting the volume of the controllers headphone plug.  
+Mixxx adjustes the gain independendly of the controller.  
 
 #### Tempo / Pitch
 
@@ -37,7 +37,7 @@ Pressing Plus- and Minus-Buttons together resets the Pitch to Zero.
 
 #### JogWheels
 
-Touch gently on the side to perform pitch bend fine tuning,
+Touch gently on the side to perform pitch bend fine tuning,  
 or press them down to do pausing / scratching.
 
 
