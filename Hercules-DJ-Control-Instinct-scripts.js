@@ -197,12 +197,11 @@ HCI.pitch = function(midiNo, control, value, status, group) {
 HCI.permPitch = function(midiNo, control, value, status, group) {
 
 	// get pressed buttons data
-	var rate = (value == ButtonState.pressed) ? "rate_perm_down" : "rate_perm_up"; // up or down push ?
+	var rate = (value == ButtonState.pressed) ? "rate_perm_up" : "rate_perm_down"; // up or down push ?
 	var speed = (HCI.shift) ? "" : "_small"; // shift increases step size
 
-	// simulate a button click.
-	engine.setValue(group, rate + speed, 1); // push
-	engine.setValue(group, rate + speed, 0); // release
+	// tick
+	engine.setValue(group, rate + speed, true);
 
 };
 
@@ -252,7 +251,7 @@ HCI.PlaylistModeFolder = function(midiNo, control, value, status, group) {
 	if (!HCI.inFileBrowser) { // folder button while in folder mode already
 
 		// expand/collapse selected folder
-		engine.setValue(group, "ToggleSelectedSidebarItem", 1);
+		engine.setValue(group, "ToggleSelectedSidebarItem", true);
 
 	} else { // folder button while in file mode
 
@@ -356,6 +355,9 @@ HCI.PlaylistNext = function(midiNo, control, value, status, group) {
 
 HCI.hotCue = function(midiNo, control, value, status, group) {
 
+	// don't do anything when button is released
+	if (value != ButtonState.pressed) return;
+
 	// get the pressed button number (1-4)
 	var cue = 1; // assume 1, but check for 2-4 after
 	for (var i = 2; i <= 4; i++) {
@@ -368,6 +370,6 @@ HCI.hotCue = function(midiNo, control, value, status, group) {
 	var action = "hotcue_" + cue + "_" + (HCI.shift ? "clear" : "activate");
 
 	// set / skip to / delete hot cue
-	engine.setValue(group, action, (value == ButtonState.pressed) ? 1 : 0);
+	engine.setValue(group, action, true);
 
 };
