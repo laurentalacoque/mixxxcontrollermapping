@@ -251,8 +251,8 @@ HCI.PlaylistModeFolder = function(midiNo, control, value, status, group) {
 	// check browser mode
 	if (!HCI.inFileBrowser) { // folder button while in folder mode already
 
-		// FIXME: Doesn't work
-		//engine.setValue(group, "ToggleSelectedSidebarItem", engine.getValue(group, "ToggleSelectedSidebarItem"));
+		// expand/collapse selected folder
+		engine.setValue(group, "ToggleSelectedSidebarItem", 1);
 
 	} else { // folder button while in file mode
 

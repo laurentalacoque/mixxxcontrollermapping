@@ -40,10 +40,14 @@ Pressing +/- buttons together resets the pitch.
 Touch gently on the side to perform pitch bend fine tuning,  
 or press them down to do pausing / scratching.  
 
+#### Folder/File Browsing
+
+Folder: Switches from file list to folder list, or expands/collapses currently selected folder.  
+File: Switches from folder list to file list, or loads currently selected file into first paused deck.  
+Up/Down: Browse up/down. (Holding down possible in file list)  
 
 ### Planned / Todo:
 
-* Folder browsing is not fully implemented yet. Folders can't be opened/closed yet.
 * Add a small delay to the feature that browses files up/down further while holding down the button.
 * Shifted headphone +- switches should control master gain, but without changing headphone volume hardware side. Not sure if surpressing the hardware side handling is actually possible though.
 * The functionality of Effect and Sample Buttons are neither tested nor documented yet.
