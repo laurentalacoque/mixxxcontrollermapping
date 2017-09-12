@@ -90,7 +90,7 @@ HCI.init = function(id, debugging) {
 
 	// set global defaults
 	HCI.shift = false;
-	HCI.pitchButtons = [[0, 0], [0, 0]];
+	HCI.pitchButtons = [null, [0, 0], [0, 0]];
 	HCI.timerPlaylist = null;
 
 	HCI.setInFileBrowser(true);
