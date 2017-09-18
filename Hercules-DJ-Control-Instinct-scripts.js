@@ -15,12 +15,12 @@ const BUTTONS = {
 	},
 
 	"[Channel2]": {
-		effect1:	0x1B, effect2:	0x1C, effect3:	0x1D,	effect4:	0x1E, // LEDs
-		sample1:	0x1F, sample2:	0x20, sample3:	0x21,	sample4:	0x22, // LEDs
-		loop1:		0x23, loop2:	0x24, loop3:	0x25,	loop4:		0x26, // LEDs
-		cue1:		0x27, cue2:		0x28, cue3:		0x29,	cue4:		0x2A, // LEDs
-		"pitch-":	0x2B, "pitch+":	0x2C, back:		0x2D,	forward:	0x2E, // no LEDs
-		cue:		0x2F, play:		0x30, sync:		0x31,	head:		0x32, // LEDs
+		effect1:	0x1B, effect2:	0x1C, effect3:	0x1D, effect4:	0x1E, // LEDs
+		sample1:	0x1F, sample2:	0x20, sample3:	0x21, sample4:	0x22, // LEDs
+		loop1:		0x23, loop2:	0x24, loop3:	0x25, loop4:	0x26, // LEDs
+		cue1:		0x27, cue2:		0x28, cue3:		0x29, cue4:		0x2A, // LEDs
+		"pitch-":	0x2B, "pitch+":	0x2C, back:		0x2D, forward:	0x2E, // no LEDs
+		cue:		0x2F, play:		0x30, sync:		0x31, head:		0x32, // LEDs
 		load:		0x33, touch:	0x34 // no LEDs
 	},
 
@@ -38,7 +38,7 @@ const BUTTONS = {
 // Used to convert channel names to deck numbers
 var nums = function(str) {
 
-	return str.replace(/\D/g,'');
+	return str.replace(/\D/g, "");
 
 };
 
@@ -92,6 +92,8 @@ HCI.init = function(id, debugging) {
 	HCI.shift = false;
 	HCI.pitchButtons = [null, [0, 0], [0, 0]];
 	HCI.timerPlaylist = null;
+	HCI.timerFirstTick = false;
+	HCI.jogFilter = false;
 
 	HCI.setInFileBrowser(true);
 
@@ -129,17 +131,26 @@ HCI.vinylButtonHandler = function(midiNo, control, value, status, group) {
 
 HCI.wheelTouch = function(midiNo, control, value, status, group) {
 
-	if (value == ButtonState.pressed) { // pressed
+	var state = value == ButtonState.pressed; // pressed
 
-		// enable scratching
-		var alpha = 1.0 / 8;
-		var beta = alpha / 32;
-		engine.scratchEnable(nums(group), 128, 33 + 1 / 3, alpha, beta);
+	if (state) {
+
+		if (!HCI.shift) {
+
+			// enable scratching
+			var alpha = 1.0 / 8;
+			var beta = alpha / 32;
+			engine.scratchEnable(nums(group), 128, 33 + 1 / 3, alpha, beta);
+
+		};
 
 	} else { // released
 
 		// disable scratching
 		engine.scratchDisable(nums(group));
+
+		// reset quick filter
+		engine.setValue("[QuickEffectRack1_" + group + "]", "super1", 0.5);
 
 	};
 
@@ -148,21 +159,30 @@ HCI.wheelTouch = function(midiNo, control, value, status, group) {
 HCI.wheelTurn = function(midiNo, control, value, status, group) {
 
 	// normalize value (-1 or 1)
-	var newValue = value;
+	var direction = value;
 	if (value - 64 > 0) {
-		newValue = value - 128;
+		direction = value - 128;
 	};
 
-	// check if scratching (wheelTouch toggle)
-	if (engine.isScratching(nums(group))) {
+	if (!HCI.shift) {
 
-		// scratch
-		engine.scratchTick(nums(group), newValue);
+		// check if scratching (wheelTouch toggle)
+		if (engine.isScratching(nums(group))) {
+
+			// scratch
+			engine.scratchTick(nums(group), direction);
+
+		} else {
+
+			// pitch bend
+			engine.setValue(group, "jog", direction);
+
+		};
 
 	} else {
 
-		// pitch bend
-		engine.setValue(group, "jog", newValue);
+		var filterValue = engine.getValue("[QuickEffectRack1_" + group + "]", "super1");
+		engine.setValue("[QuickEffectRack1_" + group + "]", "super1", filterValue + direction / 100);
 
 	};
 
@@ -291,7 +311,11 @@ HCI.PlaylistPrev = function(midiNo, control, value, status, group) {
 
 			// create and start repeat-timer, if there is none yet
 			if (HCI.timerPlaylist == null) {
-				HCI.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistPrev(' + midiNo + ',' + control + ',' + value + ',' + status + ',"' + group + '")', false);
+				HCI.timerPlaylist = engine.beginTimer(500, "HCI.PlaylistPrev(" + midiNo + ", " + control + ", " + value + ", " + status + ", '" + group + "')", true);
+				HCI.timerFirstTick = true;
+			} else if (HCI.timerFirstTick) {
+				HCI.timerPlaylist = engine.beginTimer(50, "HCI.PlaylistPrev(" + midiNo + ", " + control + ", " + value + ", " + status + ", '" + group + "')", false);
+				HCI.timerFirstTick = false;
 			};
 
 			// select previous file
@@ -325,7 +349,11 @@ HCI.PlaylistNext = function(midiNo, control, value, status, group) {
 
 			// create and start repeat-timer, if there is none yet
 			if (HCI.timerPlaylist == null) {
-				HCI.timerPlaylist = engine.beginTimer(100, 'HCI.PlaylistNext(' + midiNo + ', ' + control + ', ' + value + ', ' + status + ', "' + group + '")', false);
+				HCI.timerPlaylist = engine.beginTimer(500, "HCI.PlaylistNext(" + midiNo + ", " + control + ", " + value + ", " + status + ", '" + group + "')", true);
+				HCI.timerFirstTick = true;
+			} else if (HCI.timerFirstTick) {
+				HCI.timerPlaylist = engine.beginTimer(50, "HCI.PlaylistNext(" + midiNo + ", " + control + ", " + value + ", " + status + ", '" + group + "')", false);
+				HCI.timerFirstTick = false;
 			};
 
 			// select next file

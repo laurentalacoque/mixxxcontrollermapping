@@ -39,6 +39,8 @@ Pressing +/- buttons together resets the pitch.
 
 Touch gently on the side to perform pitch bend fine tuning,  
 or press them down to do pausing / scratching.  
+Hold shift and turn to use the quick filter.  
+Releasing the JogWheel then resets the filter.  
 
 #### Folder/File Browsing
 
@@ -48,8 +50,6 @@ Up/Down: Browse up/down. (Holding down possible in file list)
 
 ### Planned / Todo:
 
-* Add a small delay to the feature that browses files up/down further while holding down the button.
 * Shifted headphone +- switches should control master gain, but without changing headphone volume hardware side. Not sure if surpressing the hardware side handling is actually possible though.
 * The functionality of Effect and Sample Buttons are neither tested nor documented yet.
 * Find more useful uses for the shift (vinyl) button and implement them.
-* Bind "Filter" to shifted JogWheels.
