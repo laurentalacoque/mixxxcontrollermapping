@@ -3,6 +3,7 @@
 *continued by Stephan Martin*  
 *continued by freaktechnik*  
 *continued by BangL*  
+*continued by laurentalacoque* (changes in **bold**)
 
 http://www.mixxx.org/forums/viewtopic.php?f=7&t=3907  
 http://mixxx.org/  
@@ -36,8 +37,8 @@ The +/- buttons change it temporary (useful for correcting phase while beatmatch
 Pressing +/- buttons together resets the pitch.  
 
 #### JogWheels
-
-Touch gently on the side to perform pitch bend fine tuning,  
+  
+**Touch gently on the side for track selection**
 or press them down to do pausing / scratching.  
 Hold shift and turn to use the quick filter.  
 Releasing the JogWheel then resets the filter.  
