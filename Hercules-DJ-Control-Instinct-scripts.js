@@ -174,7 +174,19 @@ HCI.wheelTurn = function(midiNo, control, value, status, group) {
 		} else {
 
 			// pitch bend
-			engine.setValue(group, "jog", direction);
+			// <REMOVED>
+			// engine.setValue(group, "jog", direction);
+			// </REMOVED>
+			// <ADDED>
+			// Use jog to select tracks
+			if (value == 0x01) {
+				// Anti-clockwise
+				engine.setValue('[Playlist]', 'SelectPrevTrack', 1);
+			} else {
+				// Clockwise
+				engine.setValue('[Playlist]', 'SelectNextTrack', 1);
+			}
+			// </ADDED>
 
 		};
 
